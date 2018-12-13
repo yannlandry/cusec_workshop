@@ -1,38 +1,11 @@
 #include <Python.h>
 
-#include <stdio.h>
-
 
 /*
     A. The division C function
  */
-PyObject* division(PyObject* self, PyObject* args) {
-    double a, b, result;
 
-    if(!PyArg_ParseTuple(args, "dd", &a, &b)) {
-        return NULL;
-    }
-
-    if(b == 0) {
-        PyErr_SetString(PyExc_ValueError, "Cannot divide by zero.");
-        return NULL;
-    }
-
-    result = a / b;
-    return Py_BuildValue("d", result);
-}
-
-
-PyObject* addition(PyObject* self, PyObject* args) {
-    double a, b, result;
-
-    if(!PyArg_ParseTuple(args, "dd", &a, &b)) {
-        return NULL;
-    }
-
-    result = a + b;
-    return Py_BuildValue("d", result);
-}
+// TODO: define division method
 
 
 /*
@@ -47,28 +20,18 @@ PyMethodDef yelp_arithmetic_methods[] = {
         "what does it do"           <-- docstring for the python method
     }
 */
-    {
-        "division",
-        (PyCFunction)division,
-        METH_VARARGS,
-        "Divides A and B."
-    },
 
-    {
-        "addition",
-        (PyCFunction)addition,
-        METH_VARARGS,
-        "Adds A and B."
-    },
+    // TODO: add mappings
 
     // always add an empty value
     // to mark the end of the array
-    {NULL, NULL, NULL, NULL}
+    {NULL, NULL, 0, NULL}
 };
 
 
 /*
     C. The module definition
+       Already completed
  */
 struct PyModuleDef module = {
     PyModuleDef_HEAD_INIT,      // always use this value
@@ -87,6 +50,5 @@ struct PyModuleDef module = {
     D. The initialization method, called when importing
        To always be called PyInit_module_name
  */
-PyMODINIT_FUNC PyInit_yelp_arithmetic(void) {
-    return PyModule_Create(&module);
-}
+
+// TODO: write init method
