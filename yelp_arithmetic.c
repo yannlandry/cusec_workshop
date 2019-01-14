@@ -4,8 +4,19 @@
 /*
     A. The division C function
  */
+PyObject* division(PyObject* self, PyObject* args) {
+    double a, b, result;
+    PyArg_ParseTuple(args, "dd", &a, &b);
 
-// TODO: define division method
+    if(b == 0) {
+        PyErr_SetString(PyExc_ValueError,
+            "Cannot divide by zero.");
+        return NULL;
+    }
+
+    result = a / b;
+    return Py_BuildValue("d", result);
+}
 
 
 /*
@@ -18,10 +29,14 @@ PyMethodDef yelp_arithmetic_methods[] = {
         (PyCFunction)c_function,    <-- name of the corresponding C function
         METH_(NO|VAR)ARGS,          <-- NOARGS: no arg taken, VARARGS: 1+ args taken
         "what does it do"           <-- docstring for the python method
-    }
+    },
 */
-
-    // TODO: add mappings
+    {
+        "division",
+        (PyCFunction)division,
+        METH_VARARGS,
+        "Divides a by b."
+    },
 
     // always add an empty value
     // to mark the end of the array
@@ -50,5 +65,6 @@ struct PyModuleDef module = {
     D. The initialization method, called when importing
        To always be called PyInit_module_name
  */
-
-// TODO: write init method
+PyMODINIT_FUNC PyInit_yelp_arithmetic(void) {
+    return PyModule_Create(&module);
+}
